@@ -79,6 +79,10 @@ public class AssembleResult
 		{
 			balloonCount++;
 		}
+		if (lb.block == ArchimedesShipMod.blockBalloonHeavy)
+		{
+			balloonCount += 2;
+		}
 		if (lb.tileEntity != null)
 		{
 			tileEntityCount++;

@@ -127,7 +127,10 @@ public final class ShipCapabilities
 		if (block == ArchimedesShipMod.blockBalloon)
 		{
 			balloons++;
-		} else if (block == ArchimedesShipMod.blockFloater)
+		}else if (block == ArchimedesShipMod.blockBalloonHeavy)
+		{
+			balloons += 2;
+		}else if (block == ArchimedesShipMod.blockFloater)
 		{
 			floaters++;
 		} else if (block == ArchimedesShipMod.blockEngine)
