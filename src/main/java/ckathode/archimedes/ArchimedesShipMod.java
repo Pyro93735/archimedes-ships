@@ -15,6 +15,7 @@ import net.minecraft.item.ItemCloth;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.oredict.OreDictionary;
 
 import org.apache.logging.log4j.Logger;
 
@@ -68,6 +69,7 @@ public class ArchimedesShipMod
 	public static BlockHelm			blockMarkShip;
 	public static Block				blockFloater;
 	public static Block				blockBalloon;
+	public static Block				blockBalloonHeavy;
 	public static BlockGauge		blockGauge;
 	public static BlockSeat			blockSeat;
 	public static Block				blockBuffer;
@@ -153,6 +155,10 @@ public class ArchimedesShipMod
 		blockBalloon.setStepSound(Block.soundTypeCloth).setHardness(0.35F).setResistance(1F);
 		registerBlock("balloon", blockBalloon, ItemCloth.class);
 		
+		blockBalloonHeavy = new BlockColored(Material.cloth).setCreativeTab(CreativeTabs.tabTransport);
+		blockBalloonHeavy.setStepSound(Block.soundTypeCloth).setHardness(0.5F).setResistance(1F);
+		registerBlock("balloon_heavy", blockBalloonHeavy, ItemCloth.class);
+		
 		blockGauge = (BlockGauge) new BlockGauge().setCreativeTab(CreativeTabs.tabTransport);
 		blockGauge.setStepSound(Block.soundTypeMetal).setHardness(1F).setResistance(1F);
 		registerBlock("gauge", blockGauge, ItemGaugeBlock.class);
@@ -187,8 +193,49 @@ public class ArchimedesShipMod
 		for (int i = 0; i < ItemDye.field_150923_a.length; i++)
 		{
 			GameRegistry.addRecipe(new ItemStack(blockBalloon, 1, i), "X", "#", Character.valueOf('X'), new ItemStack(Blocks.wool, 1, i), Character.valueOf('#'), Items.string);
+			OreDictionary.registerOre("materialBalloon", new ItemStack(blockBalloon, 1, i));
 		}
+		if (ArchimedesShipMod.instance.modConfig.heavyHardRecipe)
+		{
+			for (int i = 0; i < ItemDye.field_150923_a.length; i++)
+			{
+				GameRegistry.addRecipe(new ItemStack(blockBalloonHeavy, 1, i), " V ", "VXV", " # ", Character.valueOf('X'), new ItemStack(Blocks.wool, 1, i), Character.valueOf('#'), Items.string, Character.valueOf('V'), Items.leather);
+				OreDictionary.registerOre("materialBalloonHeavy", new ItemStack(blockBalloonHeavy, 1, i));
+			}
+		} else 
+		{
+			for (int i = 0; i < ItemDye.field_150923_a.length; i++)
+			{
+				GameRegistry.addShapelessRecipe(new ItemStack(blockBalloonHeavy, 1, i), new ItemStack(blockBalloon, 1, i), new ItemStack(blockBalloon, 1, i), new ItemStack(Items.string, 1, 0));
+				OreDictionary.registerOre("materialBalloonHeavy", new ItemStack(blockBalloonHeavy, 1, i));
+			}
+		}
+		
+		if (OreDictionary.getOres("materialBalloon").size() > 0)
+		{
+			for (ItemStack stack : OreDictionary.getOres("materialBalloon"))
+			{
+				for (int i = 0; i < ItemDye.field_150923_a.length; i++)
+				{
+					GameRegistry.addShapelessRecipe(new ItemStack(blockBalloon, 1, i), stack, new ItemStack(Items.dye, 1, 15-i));
+				}
+			}
+		}
+		
+		if (OreDictionary.getOres("materialBalloonHeavy").size() > 0)
+		{
+			for (ItemStack stack : OreDictionary.getOres("materialBalloonHeavy"))
+			{
+				for (int i = 0; i < ItemDye.field_150923_a.length; i++)
+				{
+					GameRegistry.addShapelessRecipe(new ItemStack(blockBalloonHeavy, 1, i), stack, new ItemStack(Items.dye, 1, 15-i));
+				}
+			}
+		}
+		
+		
 		Blocks.fire.setFireInfo(blockBalloon, 30, 60);
+		Blocks.fire.setFireInfo(blockBalloonHeavy, 30, 60);
 		
 		GameRegistry.addRecipe(new ItemStack(blockGauge, 1, 0), "VXV", "XO#", " # ", Character.valueOf('X'), Items.iron_ingot, Character.valueOf('#'), Items.gold_ingot, Character.valueOf('O'), Items.redstone, Character.valueOf('V'), Blocks.glass_pane);
 		GameRegistry.addRecipe(new ItemStack(blockGauge, 1, 0), "VXV", "XO#", " # ", Character.valueOf('X'), Items.gold_ingot, Character.valueOf('#'), Items.iron_ingot, Character.valueOf('O'), Items.redstone, Character.valueOf('V'), Blocks.glass_pane);

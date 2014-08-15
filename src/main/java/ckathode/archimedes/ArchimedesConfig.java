@@ -39,6 +39,7 @@ public class ArchimedesConfig
 	public Set<String>		blockWhitelist;
 	public Set<String>		overwritableBlocks;
 	public boolean			useNewAlgorithm;
+	public boolean			heavyHardRecipe;
 	
 	//Control
 	public int				shipControlType;
@@ -65,7 +66,7 @@ public class ArchimedesConfig
 		Block[] defaultBlocksWhitelist = { Blocks.acacia_stairs, Blocks.activator_rail, Blocks.anvil, Blocks.bed, Blocks.birch_stairs, Blocks.bookshelf, Blocks.brewing_stand, Blocks.brick_block, Blocks.brick_stairs, Blocks.cactus, Blocks.cake, Blocks.carpet, Blocks.coal_block, Blocks.cobblestone, Blocks.cobblestone_wall, Blocks.command_block, Blocks.crafting_table, Blocks.dark_oak_stairs, Blocks.detector_rail, Blocks.diamond_block, Blocks.dispenser, Blocks.dropper, Blocks.daylight_detector, Blocks.double_stone_slab, Blocks.double_wooden_slab, Blocks.emerald_block, Blocks.enchanting_table, Blocks.end_stone, Blocks.ender_chest, Blocks.fence, Blocks.fence_gate, Blocks.flower_pot, Blocks.furnace, Blocks.fire, Blocks.glass, Blocks.glass_pane, Blocks.glowstone, Blocks.gold_block, Blocks.golden_rail, Blocks.hardened_clay, Blocks.hay_block, Blocks.heavy_weighted_pressure_plate, Blocks.hopper, Blocks.iron_bars, Blocks.iron_block, Blocks.iron_door, Blocks.jukebox, Blocks.jungle_stairs, Blocks.ladder, Blocks.lapis_block, Blocks.lever, Blocks.light_weighted_pressure_plate, Blocks.lit_furnace, Blocks.lit_pumpkin, Blocks.lit_redstone_lamp, Blocks.log, Blocks.log2, Blocks.melon_block, Blocks.mob_spawner, Blocks.monster_egg, Blocks.mossy_cobblestone, Blocks.nether_brick, Blocks.nether_brick_fence, Blocks.nether_brick_stairs, Blocks.noteblock, Blocks.oak_stairs, Blocks.obsidian, Blocks.planks, Blocks.pumpkin, Blocks.piston, Blocks.piston_extension, Blocks.piston_head, Blocks.powered_comparator, Blocks.powered_repeater, Blocks.quartz_block, Blocks.quartz_stairs, Blocks.rail, Blocks.redstone_block, Blocks.redstone_torch, Blocks.redstone_wire, Blocks.sandstone, Blocks.sandstone_stairs, Blocks.skull, Blocks.sponge, Blocks.spruce_stairs, Blocks.stained_hardened_clay, Blocks.standing_sign, Blocks.stone_brick_stairs, Blocks.stone_button, Blocks.stone_pressure_plate, Blocks.stone_stairs, Blocks.stonebrick, Blocks.stained_glass, Blocks.stained_glass_pane, Blocks.sticky_piston, Blocks.stone_slab, Blocks.tnt, Blocks.torch, Blocks.trapdoor, Blocks.trapped_chest, Blocks.tripwire, Blocks.tripwire_hook, Blocks.unlit_redstone_torch, Blocks.unpowered_comparator, Blocks.unpowered_repeater, Blocks.wall_sign, Blocks.web, Blocks.wooden_button, Blocks.wooden_door, Blocks.wooden_pressure_plate, Blocks.wool, Blocks.wooden_slab };
 		Block[] defaultOverwritableBlocks = { Blocks.tallgrass, Blocks.waterlily };
 		String[] defaultMaterialDensities = { "\"minecraft:air=0.0\"", "\"minecraft:wool=0.1\"" };
-		String[] defaultBlockDensities = { "\"ArchimedesShips:floater=0.04\"", "\"ArchimedesShips:balloon=0.02\"" };
+		String[] defaultBlockDensities = { "\"ArchimedesShips:floater=0.04\"", "\"ArchimedesShips:balloon=0.02\"", "\"ArchimedesShips:heavy_balloon=0.04\"" };
 		
 		String[] blockblacklistnames = new String[defaultBlockBlacklist.length];
 		for (int i = 0; i < defaultBlockBlacklist.length; i++)
@@ -73,11 +74,12 @@ public class ArchimedesConfig
 			blockblacklistnames[i] = Block.blockRegistry.getNameForObject(defaultBlockBlacklist[i]);
 		}
 		
-		String[] blockwhitelistnames = new String[6 + defaultBlocksWhitelist.length];
-		for (int i = 0; i < blockwhitelistnames.length - 6; i++)
+		String[] blockwhitelistnames = new String[7 + defaultBlocksWhitelist.length];
+		for (int i = 0; i < blockwhitelistnames.length - 7; i++)
 		{
 			blockwhitelistnames[i] = Block.blockRegistry.getNameForObject(defaultBlocksWhitelist[i]);
 		}
+		blockwhitelistnames[blockwhitelistnames.length - 7] = "ArchimedesShips:heavy_balloon";
 		blockwhitelistnames[blockwhitelistnames.length - 6] = "ArchimedesShips:marker";
 		blockwhitelistnames[blockwhitelistnames.length - 5] = "ArchimedesShips:floater";
 		blockwhitelistnames[blockwhitelistnames.length - 4] = "ArchimedesShips:balloon";
@@ -97,6 +99,7 @@ public class ArchimedesConfig
 		enableAirShips = config.get("settings", "enable_air_ships", true, "Enable or disable air ships.").getBoolean(true);
 		useNewAlgorithm = config.get("settings", "use_iterative_assemble_algorithm", false, "New assemble algorithm implemented in v1.6.2. Allows for larger ships but is a heavier load for CPU.").getBoolean(false);
 		bankingMultiplier = (float) config.get("settings", "banking_multiplier", 3d, "A multiplier for how much ships bank while making turns. Set a positive value for passive banking or a negative value for active banking. 0 disables banking.").getDouble(3d);
+		heavyHardRecipe = config.get("settings", "enable_heavy_hard_recipe", true, "Enable or disable a harder recipe for heavy balloons.").getBoolean(true);
 		
 		shipControlType = config.get("control", "control_type", CONTROL_TYPE_ARCHIMEDES, "Set to 0 to use vanilla boat controls, set to 1 to use the new Archimedes controls.").getInt();
 		turnSpeed = (float) config.get("control", "turn_speed", 1D, "A multiplier of the ship's turn speed.").getDouble(1D);
