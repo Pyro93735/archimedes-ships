@@ -190,23 +190,33 @@ public class ArchimedesShipMod
 		GameRegistry.addShapelessRecipe(new ItemStack(blockFloater, 1), Blocks.log2, Blocks.wool);
 		
 		//GameRegistry.addRecipe(new ItemStack(blockBalloon, 1), "X", "#", Character.valueOf('X'), Block.cloth, Character.valueOf('#'), Item.silk);
-		for (int i = 0; i < ItemDye.field_150923_a.length; i++)
+		if(ArchimedesShipMod.instance.modConfig.balloonHardRecipe)
 		{
-			GameRegistry.addRecipe(new ItemStack(blockBalloon, 1, i), "X", "#", Character.valueOf('X'), new ItemStack(Blocks.wool, 1, i), Character.valueOf('#'), Items.string);
-			OreDictionary.registerOre("materialBalloon", new ItemStack(blockBalloon, 1, i));
+			for (int i = 0; i < ItemDye.field_150923_a.length; i++)
+			{	
+				GameRegistry.addRecipe(new ItemStack(blockBalloon, 1, i), " V ", "VXV", " # ", Character.valueOf('X'), new ItemStack(Blocks.wool, 1, i), Character.valueOf('#'), Items.string, Character.valueOf('V'), Items.leather);
+				OreDictionary.registerOre("materialBalloon", new ItemStack(blockBalloon, 1, i));
+			}
+		}else{
+			for (int i = 0; i < ItemDye.field_150923_a.length; i++)
+			{
+				GameRegistry.addRecipe(new ItemStack(blockBalloon, 1, i), "X", "#", Character.valueOf('X'), new ItemStack(Blocks.wool, 1, i), Character.valueOf('#'), Items.string);
+				OreDictionary.registerOre("materialBalloon", new ItemStack(blockBalloon, 1, i));
+			}
 		}
-		if (ArchimedesShipMod.instance.modConfig.heavyHardRecipe)
+		
+		if (!ArchimedesShipMod.instance.modConfig.heavyHardRecipe || ArchimedesShipMod.instance.modConfig.balloonHardRecipe)
 		{
 			for (int i = 0; i < ItemDye.field_150923_a.length; i++)
 			{
-				GameRegistry.addRecipe(new ItemStack(blockBalloonHeavy, 1, i), " V ", "VXV", " # ", Character.valueOf('X'), new ItemStack(Blocks.wool, 1, i), Character.valueOf('#'), Items.string, Character.valueOf('V'), Items.leather);
+				GameRegistry.addShapelessRecipe(new ItemStack(blockBalloonHeavy, 1, i), new ItemStack(blockBalloon, 1, i), new ItemStack(blockBalloon, 1, i), new ItemStack(Items.string, 1, 0));
 				OreDictionary.registerOre("materialBalloonHeavy", new ItemStack(blockBalloonHeavy, 1, i));
 			}
 		} else 
 		{
 			for (int i = 0; i < ItemDye.field_150923_a.length; i++)
 			{
-				GameRegistry.addShapelessRecipe(new ItemStack(blockBalloonHeavy, 1, i), new ItemStack(blockBalloon, 1, i), new ItemStack(blockBalloon, 1, i), new ItemStack(Items.string, 1, 0));
+				GameRegistry.addRecipe(new ItemStack(blockBalloonHeavy, 1, i), " V ", "VXV", " # ", Character.valueOf('X'), new ItemStack(Blocks.wool, 1, i), Character.valueOf('#'), Items.string, Character.valueOf('V'), Items.leather);
 				OreDictionary.registerOre("materialBalloonHeavy", new ItemStack(blockBalloonHeavy, 1, i));
 			}
 		}

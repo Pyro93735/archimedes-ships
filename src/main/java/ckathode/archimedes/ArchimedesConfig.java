@@ -39,6 +39,7 @@ public class ArchimedesConfig
 	public Set<String>		blockWhitelist;
 	public Set<String>		overwritableBlocks;
 	public boolean			useNewAlgorithm;
+	public boolean			balloonHardRecipe;
 	public boolean			heavyHardRecipe;
 	
 	//Control
@@ -99,7 +100,8 @@ public class ArchimedesConfig
 		enableAirShips = config.get("settings", "enable_air_ships", true, "Enable or disable air ships.").getBoolean(true);
 		useNewAlgorithm = config.get("settings", "use_iterative_assemble_algorithm", false, "New assemble algorithm implemented in v1.6.2. Allows for larger ships but is a heavier load for CPU.").getBoolean(false);
 		bankingMultiplier = (float) config.get("settings", "banking_multiplier", 3d, "A multiplier for how much ships bank while making turns. Set a positive value for passive banking or a negative value for active banking. 0 disables banking.").getDouble(3d);
-		heavyHardRecipe = config.get("settings", "enable_heavy_hard_recipe", true, "Enable or disable a harder recipe for heavy balloons.").getBoolean(true);
+		balloonHardRecipe = config.get("settings", "enable_balloon_hard_recipe", true, "Enable or disable a harder recipe for heavy balloons.").getBoolean(true);
+		heavyHardRecipe = config.get("settings", "enable_heavy_hard_recipe", true, "Enable or disable a harder recipe for heavy balloons. If hard mode balloons is enabled this has no effect").getBoolean(true);
 		
 		shipControlType = config.get("control", "control_type", CONTROL_TYPE_ARCHIMEDES, "Set to 0 to use vanilla boat controls, set to 1 to use the new Archimedes controls.").getInt();
 		turnSpeed = (float) config.get("control", "turn_speed", 1D, "A multiplier of the ship's turn speed.").getDouble(1D);
